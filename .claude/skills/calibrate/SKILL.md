@@ -25,7 +25,7 @@ disable-model-invocation: true
    - 協作偏好、驗收紅線 → 記憶目錄（type: user / feedback，附原話與
      報告路徑）；已有同主題記憶檔就更新，不開新檔。
    - 該變成規則的 → 照 `docs/harness/30-maintenance.md` 改制度檔
-     （備份程序、收緊可自行、放寬先問）。
+     （改前確認已 commit、收緊可自行、放寬先問）。
    - 落地後派 fresh-context read-back 驗收（硬規則 1）。
 5. **誠實回報**：改了什麼（檔案路徑）／哪些問題找不到證據／樣本量警語
    （訊息數少於 100 條的專案，結論標「低信心」）。
