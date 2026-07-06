@@ -1,0 +1,39 @@
+#!/bin/sh
+# commit-msg hook — enforce the project's commit subject format (see
+# docs/harness/50-versioning.md). One identifier per unit of work; no stacking IDs.
+#
+# The subject (first line) MUST be one of:
+#   v<major>.<minor>.<patch>: <desc>        shippable feature/fix (version leads)
+#   docs|chore|refactor|test|build|ci|perf|style: <desc>   non-shippable (no version)
+#   Merge ... / Revert ...                  git-generated, allowed
+#
+# Enable once per clone:  git config core.hooksPath .githooks
+
+subject=$(head -n 1 "$1")
+
+# Allow git-generated subjects.
+case "$subject" in
+  "Merge "* | "Revert "*) exit 0 ;;
+esac
+
+# Shippable: version leads, colon-space, then a description.
+if printf '%s' "$subject" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+: .+'; then
+  exit 0
+fi
+
+# Non-shippable: a conventional type, optional (scope), colon-space, description.
+if printf '%s' "$subject" | grep -Eq '^(docs|chore|refactor|test|build|ci|perf|style)(\([^)]+\))?: .+'; then
+  exit 0
+fi
+
+echo "" >&2
+echo "✗ Commit subject rejected — wrong format." >&2
+echo "  Got:      $subject" >&2
+echo "" >&2
+echo "  Use ONE of:" >&2
+echo "    v<major>.<minor>.<patch>: <desc>        e.g.  v0.2.0: ticket usage view" >&2
+echo "    docs|chore|refactor|test|build|ci: <desc>   e.g.  chore: bump deps" >&2
+echo "" >&2
+echo "  Do NOT stack Phase/backlog/feature IDs (B-2, F1, Phase NN) into the subject." >&2
+echo "  See docs/harness/50-versioning.md." >&2
+exit 1
