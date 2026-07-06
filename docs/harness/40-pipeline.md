@@ -183,8 +183,8 @@
 
 ## 建制時的假設（日後可依實況修正）
 
-- 假設主對話模型是 Opus（2026-07-05 使用者自述），但流程以 Sonnet 也能
-  指揮為底線設計。
+- 主對話模型預設 Opus（2026-07-06 使用者定案，從假設升格為預設），
+  流程仍以 Sonnet 也能指揮為底線設計。
 - 假設專案無 issue tracker，故 tasks.md 充當 issue 清單；若日後接上
   GitHub Issues，S3 的產物改發 issue、S5 的 Spec 來源改抓 issue，狀態機
   可參考萃取檔中 triage 一節。

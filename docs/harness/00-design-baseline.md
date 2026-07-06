@@ -88,9 +88,9 @@
 - 假設可用 subagent 模型為 `haiku` / `sonnet` / `opus` / `fable` 四種
   （2026-07-05 實測 Agent 工具的 model 參數）。型號變動時更新
   `10-model-dispatch.md`。
-- 假設主要執行模型是 Sonnet 等級。所有規則都以「Sonnet 跑得動」為底線設計，
-  不依賴 Fable 級能力。（2026-07-05 使用者自述主對話多為 Opus——向上相容，
-  底線不變。）
+- 所有規則以「Sonnet 跑得動」為底線設計，不依賴 Fable 級能力。
+  （2026-07-06 使用者定案：指揮官**預設 Opus**；底線不變——Opus 是預設，
+  不是規則能否運作的前提。）
 - 2026-07-05 新增 `40-pipeline.md` 與 design／tdd-task／feature-review 三個
   模板，方法論萃取自 mattpocock/skills（見 `docs/notes/mattpocock-skills-extract.md`）。
   pipeline 的每個階段規則同樣追溯到本檔三大失效模式：S1 規格 gate 與範圍鎖
