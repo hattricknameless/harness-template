@@ -36,7 +36,7 @@
 
 | 情境 | 讀 |
 |---|---|
-| 使用者要開發功能或修 bug（功能級）、或打 `/pipeline` | `docs/harness/40-pipeline.md` |
+| 使用者交辦任何功能或 bug 修復（不分大小，功能＝fix 同流程）——**自動走，不需打 `/pipeline`**；深度隨份量分級，grill 與驗收永不省。大模組自主跑到可上線 → `/epic` | `docs/harness/40-pipeline.md` |
 | 要派 subagent、選模型、決定誰做什麼 | `docs/harness/10-model-dispatch.md` |
 | 拿不準「該不該升級／算不算完成／該不該問使用者／該不該換路」 | `docs/harness/20-judgment.md` |
 | 準備寫派工 prompt | `docs/harness/templates/` 選對應模板照填 |
