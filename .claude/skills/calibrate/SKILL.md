@@ -41,4 +41,16 @@ disable-model-invocation: true
 - 主對話不直接讀 `.jsonl`（單檔動輒數 MB，會淹死 context）——一律派工。
 - 每個落地的結論必須能指回報告裡的使用者原話。
 - 引用中的 API key／密碼／個資一律遮蔽。
+- **產出報告（`user-patterns-*.md`）含跨專案機密，只留本機**：本 repo 公開，
+  `docs/notes/` 已 gitignore——禁止 `git add -f` 強推這些報告；制度檔要引用時
+  只寫「依本機私有校準分析」，不寫 repo 路徑（否則公開 clone 斷鏈）。詳見記憶
+  `repo-public-notes-private`。
 - 放寬既有制度規則的建議：先問使用者，不自行落地。
+
+## 教訓
+
+- [2026-07-22] `[耐久]` 坑：calibrate 產出的 user-patterns 報告含其他專案的
+  交易策略、真實 email、商業邏輯，被 commit 進**公開** GitHub repo 約一天。
+  因：報告天生含跨專案 context，而 `docs/notes/` 當時未 gitignore。
+  改：整個 `docs/notes/` 加入 `.gitignore`（例外 mattpocock 公開資料），
+  已從全歷史 filter-repo 移除＋force-push；見上方硬規則第 4 條。
