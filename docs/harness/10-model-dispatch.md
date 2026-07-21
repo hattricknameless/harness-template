@@ -15,10 +15,13 @@
   - `Plan` — 唯讀規劃，回實作計畫。
   - `general-purpose` — 全工具，適合實作與多步任務。
   - `claude-code-guide` — 只用於回答 Claude Code / API 本身的問題。
-- **沒有獨立的 effort 參數**。effort 只能用兩個手段近似：
-  (a) 換模型；(b) 在派工 prompt 裡明寫思考深度要求
-  （例如「動手前先想清楚 edge cases 再實作」）。不要在工具呼叫裡
-  發明 effort 欄位。
+- **effort 參數視派工方式而定**（2026-07-22 修正 2026-07-05 的舊實測）：
+  - **Agent 工具（日常派 subagent）**：沒有獨立 effort 參數。只能用兩個手段
+    近似——(a) 換模型；(b) 在派工 prompt 裡明寫思考深度要求（例如「動手前先想
+    清楚 edge cases 再實作」）。不要在 Agent 工具呼叫裡發明 effort 欄位。
+  - **Workflow 工具（多 agent 編排）**：`agent()` 有 `opts.effort`，五級
+    `low`／`medium`／`high`／`xhigh`／`max`。要把某關（如 pipeline S5 閱卷）的
+    effort 明確開高，走 Workflow 編排時才用得到這個旋鈕。
 - 其他可用資源：MCP（Figma / Canva / Notion）、記憶目錄
   （`~/.claude/projects/<本專案>/memory/`）、skills（/code-review、/verify 等）。
 
@@ -96,6 +99,11 @@ subagent 違約（貼了大量原文回來）時：這次先用，但下次派�
 
 Fresh-context 的意思：驗收 agent 的 prompt 只給「產物路徑 + 驗收條件」，
 **不給**產生過程的推理與草稿，避免繼承盲點。
+
+**pipeline 裡程式碼的「不自驗」升級為三角色分立**（見 `40-pipeline.md` S4／S5）：
+出題（設計驗收測試）、實作、閱卷是三個獨立空視窗，出題者不得是實作者、閱卷者不得是
+另外兩者。理由——實作者若自己出驗收測試，對需求的誤解會同時寫進程式與測試，測試綠燈
+卻蓋掉 bug，等於自驗。模型：出題／閱卷用 opus（閱卷最難、最不該省），實作用 sonnet。
 
 ## 建制時的假設（日後可依實況修正）
 

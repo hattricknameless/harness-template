@@ -18,8 +18,9 @@
 | S1 規格 | 逼問對齊 → spec | 指揮官 ↔ 使用者 | `spec.md` | 本檔 §S1 |
 | S2 設計 | 介面與 seam | Plan（sonnet/opus） | `design.md` | `templates/design.md` |
 | S3 拆解 | 切 vertical slice | 指揮官 | `tasks.md` | 本檔 §S3 |
-| S4 實作 | 逐片 red→green | general-purpose（sonnet） | 程式碼＋測試 | `templates/tdd-task.md` |
-| S5 驗收 | 兩軸審查＋重構 | fresh-context（sonnet） | 審查報告 | `templates/feature-review.md` |
+| S4a 出題 | 依 spec 設計驗收測試（先紅） | fresh-context（opus） | 測試 | `templates/test-design.md` |
+| S4b 實作 | 把紅燈弄綠 | general-purpose（sonnet） | 程式碼 | `templates/tdd-task.md` |
+| S5 驗收 | 兩軸審查＋重構 | fresh-context（opus，獨立於 S4a） | 審查報告 | `templates/feature-review.md` |
 | S6 收尾 | 記錄與誠實回報 | 指揮官 | 更新的文件 | — |
 
 - **產物目錄**：`docs/specs/<YYYYMMDD-slug>/`（spec.md、design.md、tasks.md、
@@ -38,8 +39,16 @@
   | S1 確認卡 | 三格（重現/期望/完成） | 完整版（一頁八格） | 完整版 |
   | S2 設計 gate | 併入確認卡或省略 | 完整白話設計摘要 | 設計摘要，高風險再 Design It Twice |
   | S3 拆解 | 常單片 | 數片 | 多片、可平行 |
+  | S4 角色分立 | 出題可併入實作（同一 agent 先紅後綠），**但獨立閱卷永不省** | 出題／實作分立（出題 opus、實作 sonnet） | 三者全分立，閱卷可再加第二位獨立 reviewer |
   | S5 驗收 | Spec 軸＋全量測試 | ＋Standards 軸 | 完整矩陣 |
   | 走法 | 自動 pipeline | 自動 pipeline | 使用者打 `/epic`（＋批判迭代循環） |
+- **三角色分立（不自驗的落實，2026-07-22 使用者定案）**：出題、實作、閱卷是
+  三個獨立空視窗，理由是「寫測試的人若也寫程式，對需求的誤解會同時寫進兩邊、
+  測試漂亮通過卻蓋掉 bug」——這正是硬規則「不自驗」。**出題者不得是實作者**；
+  **閱卷者不得是出題者也不得是實作者**（因為出題者＝閱卷者等於拿自己出的題改
+  自己的考卷，看不到自己那套題漏了什麼）。三角色的認知難度不平：閱卷最難
+  （要找「不存在的東西」——漏做、假通過），故閱卷用最強模型（opus），是最不該
+  省的一關；出題次之（opus），實作最機械（sonnet）。份量縮放見上表 S4 列。
 - **gate 給使用者看的是白話產物，不是結構化產物本身**：S1 gate 給「確認卡」
   （§S1 定義的完整版，約一頁），S2 gate 給「白話設計摘要」（§S2 定義），小改動的
   確認卡可縮到三格（重現／期望／完成）——份量不同但共一條原則：全中文口語、寫給使用者讀、
@@ -162,14 +171,30 @@ read-back 通過後，給使用者一張**白話設計摘要**（這個設計打
 **完成判準**：spec 的每個 user story 至少被一片涵蓋；依賴排好序；
 每片的驗收 checklist 逐條可驗。
 
-## S4 實作（逐片 red→green）
+## S4 實作（逐片：先出題、再實作弄綠）
 
-依依賴序逐片照 `templates/tdd-task.md` 派工（sonnet 預設；純機械式套模式
-可 haiku）。核心紀律寫在模板裡：先紅後綠、測試只打核准的 seam、
-不重構、不加投機功能。
+每片走兩個獨立角色，**同一片的出題者與實作者不得是同一個 subagent**（三角色
+分立，見 §0）。份量縮放：小修可把出題併入實作（同一 agent 先紅後綠），
+中／大則分立。
+
+### S4a 出題（fresh-context opus，先紅）
+
+進實作前，先照 `templates/test-design.md` 派一個**只讀 spec、沒參與實作**的
+opus agent，依該片的 What to build 與 spec 設計驗收測試。它把正常／邊界／錯誤
+路徑窮盡成測試、實際跑到全紅（紅在「未實作」而非測試自己寫壞），並誠實回報
+自己覺得還沒覆蓋到的缺口。這套測試是實作的**唯一驗收標準**。
+（小修份量：本步可併入 S4b 由同一 agent 先紅後綠，但獨立閱卷 S5 永不省。）
+
+### S4b 實作（general-purpose sonnet，弄綠）
+
+依依賴序逐片照 `templates/tdd-task.md` 派工（sonnet 預設；純機械式套模式可
+haiku）。實作者的任務是**把 S4a 出的紅燈弄綠**：不得修改或刪弱那套驗收測試、
+不得用 hardcode／mock 內部協作者去騙過測試；為自己開發方便寫的臨時 micro-test
+不算驗收標準。核心紀律（測試只打核准 seam、不重構、不加投機功能）寫在模板裡。
 
 指揮官每片收工時做三件事：
-1. 核對回報的三段式（做了什麼／驗證輸出／沒做什麼），驗證輸出必須是實跑結果。
+1. 核對回報的三段式（做了什麼／驗證輸出／沒做什麼），驗證輸出必須是實跑結果；
+   確認實作者是「讓既有驗收測試變綠」，不是改題目來遷就實作。
 2. 更新 tasks.md 該片狀態。
 3. 決定下一片或處理卡點。
 
@@ -201,10 +226,19 @@ read-back 通過後，給使用者一張**白話設計摘要**（這個設計打
 ## S5 驗收（兩軸審查＋重構）
 
 1. **全量測試實跑**：跑整個測試套件（輸出大就派 agent 跑、落檔、回結論）。
-2. **兩軸審查**：照 `templates/feature-review.md` 派 fresh-context sonnet——
+2. **兩軸審查**：照 `templates/feature-review.md` 派 **fresh-context opus，且
+   獨立於 S4a 出題者與 S4b 實作者**（三角色分立的第三角）——
    **Spec 軸**（對照 spec.md＋tasks.md：缺漏、scope creep、假完成）與
    **Standards 軸**（程式異味，判斷題）。兩軸**分開回報、不合併排名**：
    程式可能「規範全過但做錯了東西」，混在一起會互相遮蓋。
+   - **閱卷的核心價值是找「測試照不到的東西」**：測試綠燈只代表「被寫出來的
+     那幾條測試通過」，不代表做對了。閱卷必須拿 **spec（不是拿測試）** 去對
+     程式，額外扛一條職責——**查 S4a 那套測試本身漏了 spec 哪些面向**（有哪些
+     可觀察行為沒被任何測試涵蓋）。這是閱卷不能被「跑一次測試」取代的原因。
+   - **effort**：本環境日常派工（Agent 工具）沒有獨立 effort 旋鈕，靠「opus ＋
+     prompt 明寫『逐條對 spec、主動找漏做與假通過、想清楚再下結論』」逼出高
+     effort；若整條 pipeline 走 Workflow 編排，把本關 agent 的 effort 設 high／max
+     （見 `10-model-dispatch.md` §0）。
 3. **重構在這裡做**（不在 S4 的 red→green 迴圈裡）：Standards 軸值得修的
    發現，照 `templates/refactor.md` 派工（行為驗證手段＝第 1 步的全量測試），
    修完重跑測試。

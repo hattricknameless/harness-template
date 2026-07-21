@@ -18,7 +18,7 @@
   50-versioning.md          ← 版本與命名：一個工作單位只掛一個編號
   90-letter.md              ← 建制者給未來 session 的信
   templates/                ← 派工 prompt 模板（搜尋/實作/重構/研究/審查/
-                               設計/TDD單片/整功能兩軸審查）
+                               設計/出題/TDD單片/整功能兩軸審查）
 /.claude/skills/            ← 指令入口：pipeline（開發流程，薄殼→40-pipeline）、
                                grill（逼問訪談→CONTEXT/ADR）、wrap（收工）、
                                status（現況摘要，唯讀）、calibrate（分析歷史
