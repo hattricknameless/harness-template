@@ -55,7 +55,7 @@
   讀完能拍板。spec.md／
   design.md 則是給 agent 讀的內部檔，可保持技術性與英文欄位，絕不要求使用者讀
   （2026-07-19 使用者定案：spec 太大、用詞不對、沒 incentive 讀完是真實痛點，
-  證據見 `docs/notes/user-patterns-*-pipeline.md`）。
+  依本機私有校準分析定案；該分析含其他專案 context，不隨模板公開）。
 - **中斷恢復**：知道需求後、進 S0 之前，先看 `docs/specs/` 有無 tasks.md
   未全部完成的目錄；有就問使用者續跑還是新開，續跑則從 tasks.md 的狀態接續。
 
