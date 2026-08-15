@@ -17,6 +17,12 @@
 `/pipeline fix` 或單點小修＝ PATCH。純文件／制度檔改動**不掛版本**
 （commit 用 `docs:`／`chore:` 開頭，見第 3 節）。
 
+**宣告出貨＝git 裡必須有對應的 commit**。在 tasks.md／DEVLOG／STATUS 標
+「出貨 vX.Y.Z」之前，先 `git log --oneline | grep vX.Y.Z` 確認它存在，不存在就
+先 commit 再標。只更新文件不算出貨——「文件說出貨、git 裡沒有」會讓下一件工作
+在未提交的工作區上另起，把前一件整包落下。幻影版本號照第 2 節第 5 點往前修，
+不回頭改已出貨的號與歷史紀錄。
+
 ## 2. 唯一編號規則（防紊亂的核心，無例外）
 
 1. 每個可出貨單位對外只有**一個**標籤：版本號。
@@ -41,9 +47,10 @@
 - git 自動產生的 `Merge …`／`Revert …` 放行。
 
 Hook 已放在 `.githooks/commit-msg`（自 GameGen Service 移植）。
-本專案目前**尚未 git init**——在那之前本節格式靠自律遵守，hook 不會攔。
-**git init 之後執行一次**：`git config core.hooksPath .githooks`，
-並把這步寫進當時的 DEVLOG。改格式規則＝同時改本檔與 hook，兩處同步。
+本模板 repo 已 git 化且已執行 `git config core.hooksPath .githooks`，hook 生效中。
+**從本模板複製出去的新專案，`git init` 之後要再執行一次那條指令**（設定存在
+本機 git config，不隨檔案複製），並把這步寫進當時的 DEVLOG；在那之前本節格式
+靠自律遵守，hook 不會攔。改格式規則＝同時改本檔與 hook，兩處同步。
 
 ## 4. 各檔案怎麼配合
 
@@ -56,6 +63,7 @@ Hook 已放在 `.githooks/commit-msg`（自 GameGen Service 移植）。
 
 ## 建制時的假設（日後可依實況修正）
 
-- 假設專案尚未 `git init`；hook 先就位，git 化當日啟用。
+- ~~假設專案尚未 `git init`；hook 先就位，git 化當日啟用~~
+  （已實現：本模板 repo 已 git 化並啟用 hook，見第 3 節）。
 - 假設無發佈管線；若日後有 tag／release 流程，tag 名＝版本號本身
   （`v0.2.0`），不另創格式。
