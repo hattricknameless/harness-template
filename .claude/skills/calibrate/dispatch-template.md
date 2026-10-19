@@ -18,6 +18,11 @@
   （斜線指令輸出）、<task-notification>、<system-reminder> 的都不是人打的。
   compaction 自動摘要的標記：記錄含 `"isCompactSummary":true`，或內文以
   "This session is being continued" 開頭。
+- 另一個 Claude session 或 subagent 傳來的訊息也是字串內容：內文以
+  "Another Claude session sent a message" 開頭、含 <agent-message>／
+  <cross-session-message>，或記錄的 origin.kind 不是 "human"（例如 "peer"）的，
+  一律剔除。反過來，使用者在 Claude 工作中途插進來的訊息存在佇列記錄
+  （queued_command，origin.kind 為 human）裡，要補進樣本。
 - 以上都判不定的（例如無標籤的注入內容）：**剔除並在報告中註記剔除數量**，
   不准靠口吻猜測收錄。
 - 禁止整檔 Read。用 rg／PowerShell 把候選行抽到 scratchpad 檔再處理；
