@@ -34,6 +34,8 @@
 - **查測試套件本身的缺口**：spec 有哪些可觀察行為沒被任何測試涵蓋（漏做的、
   或做了但沒人測的）？主動找這種「測試照不到」的洞，這是本軸最關鍵的產出。
 - 列出 spec 沒要求卻出現的行為（scope creep），對照 Out of Scope。
+- spec 的 Future-Proofing 每一條：預留有沒有做到（到時能不能直接接上）；有沒有
+  用了「那個功能一做就得拆掉」的臨時寫法。沒做到或有臨時寫法 → 列為缺漏。
 - 列出「看似做了但實作有問題」的項目（例如空殼函式、hardcode 騙過測試的、
   被 skip 的測試）。
 - 出題者「建議刪除的舊測試」（派工者會附上清單；沒有就跳過）：逐條確認新測試真的涵蓋
@@ -55,6 +57,7 @@
   Data Clumps／Primitive Obsession／Repeated Switches／Shotgun Surgery／
   Divergent Change／Speculative Generality／Message Chains／Middle Man／
   Refused Bequest。每個發現：命名異味＋引用位置＋一句話為什麼＋標「必修」或「可延後」。
+  spec 的 Future-Proofing 核准的預留不算 Speculative Generality。
   只有會造成錯誤行為、或會讓下一次改動很容易出錯的才標必修；其餘可延後
   （沒有必修項目時，指揮官不開「修正＋複查」那一輪）。
 - 專案已文件化的慣例（CONTEXT.md、CONTRIBUTING 等）優先於上述清單；

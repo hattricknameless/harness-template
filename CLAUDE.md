@@ -26,6 +26,8 @@
                                結構出整理建議，不改碼）
 /docs/STATUS.md             ← 專案現況快照（/wrap 維護，整檔覆寫）
 /docs/DEVLOG.md             ← 開發日誌（只追加，一 session 一則）
+/docs/ROADMAP.md            ← 使用者說過之後確定要做的功能（pipeline S1 追加、
+                               S6 做完刪除；懶建檔）
 /docs/specs/                ← pipeline 產物：每功能一目錄（spec/design/tasks）
 /docs/notes/                ← 研究報告與長產物落檔處
 /.githooks/                 ← commit-msg hook（50-versioning 的強制器；git init 後
