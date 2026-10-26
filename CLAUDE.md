@@ -22,7 +22,8 @@
 /.claude/skills/            ← 指令入口：pipeline（開發流程，薄殼→40-pipeline）、
                                grill（逼問訪談→CONTEXT/ADR）、wrap（收工）、
                                status（現況摘要，唯讀）、calibrate（分析歷史
-                               session 校準制度與記憶）
+                               session 校準制度與記憶）、architecture（掃程式
+                               結構出整理建議，不改碼）
 /docs/STATUS.md             ← 專案現況快照（/wrap 維護，整檔覆寫）
 /docs/DEVLOG.md             ← 開發日誌（只追加，一 session 一則）
 /docs/specs/                ← pipeline 產物：每功能一目錄（spec/design/tasks）
@@ -37,6 +38,7 @@
 | 情境 | 讀 |
 |---|---|
 | 使用者交辦任何功能或 bug 修復（不分大小，功能＝fix 同流程）——**自動走，不需打 `/pipeline`**；深度隨份量分級，grill 與驗收永不省。大模組自主跑到可上線 → `/epic` | `docs/harness/40-pipeline.md` |
+| 使用者想整理既有程式結構、問「哪裡該重構」、或大功能開工前想先讓改動變簡單 → 提示使用者打 `/architecture`，不自動掃（只出建議，挑中的那個再走 pipeline） | `.claude/skills/architecture/SKILL.md` |
 | 要派 subagent、選模型、決定誰做什麼 | `docs/harness/10-model-dispatch.md` |
 | 拿不準「該不該升級／算不算完成／該不該問使用者／該不該換路」 | `docs/harness/20-judgment.md` |
 | 準備寫派工 prompt | `docs/harness/templates/` 選對應模板照填 |
