@@ -15,6 +15,7 @@
   20-judgment.md            ← 判斷 rubric：升級／完成／該問／換路／品質底線
   30-maintenance.md         ← 如何安全地更新以上檔案
   40-pipeline.md            ← 開發 pipeline：需求→規格→設計→拆解→實作→驗收
+  41-pipeline-branches.md   ← pipeline 支線：難 bug 診斷、試效果模式（觸發時才讀）
   50-versioning.md          ← 版本與命名：一個工作單位只掛一個編號
   90-letter.md              ← 建制者給未來 session 的信
   templates/                ← 派工 prompt 模板（搜尋/實作/重構/研究/審查/
@@ -39,8 +40,9 @@
 
 | 情境 | 讀 |
 |---|---|
-| 使用者交辦任何功能或 bug 修復（不分大小，功能＝fix 同流程）——**自動走，不需打 `/pipeline`**；深度隨份量分級，grill 與驗收永不省。大模組自主跑到可上線 → `/epic` | `docs/harness/40-pipeline.md` |
+| 使用者交辦任何功能或 bug 修復（不分大小，功能＝fix 同流程）——**自動走，不需打 `/pipeline`**；深度隨份量分級，grill 與驗收永不省。大模組自主跑到可上線 → `/epic`（尚未建立，目前照 40-pipeline 完整深度跑） | `docs/harness/40-pipeline.md` |
 | 使用者想整理既有程式結構、問「哪裡該重構」、或大功能開工前想先讓改動變簡單 → 提示使用者打 `/architecture`，不自動掃（只出建議，挑中的那個再走 pipeline） | `.claude/skills/architecture/SKILL.md` |
+| pipeline 中碰到歸因不明的難 bug，或使用者要「先試效果、定案再補」 | `docs/harness/41-pipeline-branches.md` |
 | 要派 subagent、選模型、決定誰做什麼 | `docs/harness/10-model-dispatch.md` |
 | 拿不準「該不該升級／算不算完成／該不該問使用者／該不該換路」 | `docs/harness/20-judgment.md` |
 | 準備寫派工 prompt | `docs/harness/templates/` 選對應模板照填 |
